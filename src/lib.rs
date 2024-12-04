@@ -1,3 +1,4 @@
+#[cfg(feature = "serde")]
 use ::tracing::Level;
 
 /// Create an enum and assign variant strings.
@@ -94,7 +95,7 @@ pub enum Color {
     /// Never use colors
     Never,
 }
-
+#[cfg(feature = "ansi")]
 stringable_enum! {
     Color {
         Always = "always",
@@ -102,7 +103,7 @@ stringable_enum! {
         Never = "never",
     }
 }
-
+#[cfg(feature = "ansi")]
 impl Color {
     /// returns True if the provided stream is a terminal.
     #[inline]
@@ -143,6 +144,8 @@ pub enum LogLevelSerdable {
     Warn,
     Error,
 }
+
+#[cfg(feature = "serde")]
 impl LogLevelSerdable {
     pub const fn to_tracing(&self) -> Level {
         match self {
@@ -154,6 +157,8 @@ impl LogLevelSerdable {
         }
     }
 }
+
+#[cfg(feature = "serde")]
 stringable_enum! {
     LogLevelSerdable {
         Trace = "trace",
